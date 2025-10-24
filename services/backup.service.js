@@ -63,7 +63,6 @@ const restoreBackup = (folderName) => {
     });
 };
 
-// 0 2 * * *
 const scheduleBackup = () => {
     cron.schedule('0 2 * * *', async () => {
         logger?.info('[Backup Scheduler] Starting scheduled backup...');

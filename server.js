@@ -2,12 +2,15 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.config");
-const logger = require("./utilities/logger.util");
-const AppError = require("./utilities/app.error.util");
 const corsHandler = require("./middleware/cors.middleware");
+const logger = require("./utilities/logger.util");
+
+const AppError = require("./utilities/app.error.util");
 const errorHandler = require("./middleware/errorHandler.middleware");
+
 const { scheduleBackup } = require("./services/backup.service");
-const userRouter = require("./routes/userRoute");
+
+const authRoutes = require("./routes/auth.route");
 
 dotenv.config();
 
@@ -33,7 +36,7 @@ connectDB();
 scheduleBackup();
 
 // Routes
-app.use("/api/v1/users", userRouter);
+app.use("/api/auth", authRoutes);
 
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
