@@ -1,0 +1,21 @@
+module.exports = {
+  testEnvironment: 'node',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testMatch: ['**/__tests__/**/*.test.js'],
+  collectCoverageFrom: [
+    'controllers/**/*.js',
+    'middleware/**/*.js',
+    'models/**/*.js',
+    'routes/**/*.js',
+    'services/**/*.js',
+    'utilities/**/*.js',
+    '!**/node_modules/**',
+    '!**/coverage/**',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
+  verbose: true,
+  forceExit: true,
+  detectOpenHandles: true,
+  testTimeout: 10000,
+};
