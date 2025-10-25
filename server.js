@@ -2,8 +2,10 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.config");
+dotenv.config();
 const corsHandler = require("./middleware/cors.middleware");
 const logger = require("./utilities/logger.util");
+const swaggerDocs = require('./config/swagger');
 
 const AppError = require("./utilities/app.error.util");
 const errorHandler = require("./middleware/errorHandler.middleware");
@@ -12,7 +14,6 @@ const { scheduleBackup } = require("./services/backup.service");
 
 const authRoutes = require("./routes/auth.route");
 
-dotenv.config();
 
 // Handle uncaught exceptions
 process.on("uncaughtException", (err) => {
@@ -37,6 +38,9 @@ scheduleBackup();
 
 // Routes
 app.use("/api/auth", authRoutes);
+
+// Swagger Docs (only if enabled and not in production)
+swaggerDocs(app);
 
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
