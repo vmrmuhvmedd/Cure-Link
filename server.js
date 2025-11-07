@@ -13,6 +13,7 @@ const errorHandler = require("./middleware/errorHandler.middleware");
 const { scheduleBackup } = require("./services/backup.service");
 
 const authRoutes = require("./routes/auth.route");
+const medicineRoutes = require("./routes/medicine.route");
 
 
 // Handle uncaught exceptions
@@ -38,6 +39,7 @@ scheduleBackup();
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/medicines", medicineRoutes);
 
 // Swagger Docs (only if enabled and not in production)
 swaggerDocs(app);

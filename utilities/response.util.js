@@ -3,22 +3,25 @@ const STATUS_CODES = require('./response.codes.util');
 
 const sendSuccess = (res, data = null, message = 'Success', statusCode = STATUS_CODES.OK) => {
     return res.status(statusCode).json({
+        success: true,
         status: responsesStatus.SUCCESS,
         message,
-        data
+        ...(data !== null && data !== undefined && { data })
     });
 };
 
-const sendFail = (res, errors = [], message = 'Fail', statusCode = STATUS_CODES.BAD_REQUEST) => {
+const sendFail = (res, errors = {}, message = 'Fail', statusCode = STATUS_CODES.BAD_REQUEST) => {
     return res.status(statusCode).json({
+        success: false,
         status: responsesStatus.FAIL,
         message,
-        errors
+        ...(Object.keys(errors).length > 0 && { errors })
     });
 };
 
 const sendError = (res, error, message = 'Error', statusCode = STATUS_CODES.INTERNAL_SERVER_ERROR) => {
     return res.status(statusCode).json({
+        success: false,
         status: responsesStatus.ERROR,
         message,
         error
